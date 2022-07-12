@@ -30,7 +30,7 @@ class FloatBoxPanel extends StatefulWidget {
   final Function(int)? onPressed;
 
   FloatBoxPanel(
-      {required this.buttons,
+      {this.buttons = const [],
       this.positionTop,
       this.positionLeft,
       this.borderColor,
@@ -129,11 +129,7 @@ class _FloatBoxState extends State<FloatBoxPanel> {
 
     // Total buttons are required to calculate the height of the panel;
     double _totalButtons() {
-      if (widget.buttons == null) {
-        return 0;
-      } else {
-        return widget.buttons.length.toDouble();
-      }
+      return widget.buttons.length.toDouble();
     }
 
     // Height of the panel according to the panel state;
