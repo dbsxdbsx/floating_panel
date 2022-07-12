@@ -7,30 +7,30 @@ enum DockType { inside, outside }
 enum PanelState { open, closed }
 
 class FloatBoxPanel extends StatefulWidget {
-  final double positionTop;
-  final double positionLeft;
-  final Color borderColor;
-  final double borderWidth;
-  final double size;
-  final double iconSize;
-  final IconData panelIcon;
-  final BorderRadius borderRadius;
-  final Color backgroundColor;
-  final Color contentColor;
-  final PanelShape panelShape;
-  final PanelState panelState;
-  final double panelOpenOffset;
-  final int panelAnimDuration;
-  final Curve panelAnimCurve;
-  final DockType dockType;
-  final double dockOffset;
-  final int dockAnimDuration;
-  final Curve dockAnimCurve;
+  final double? positionTop;
+  final double? positionLeft;
+  final Color? borderColor;
+  final double? borderWidth;
+  final double? size;
+  final double? iconSize;
+  final IconData? panelIcon;
+  final BorderRadius? borderRadius;
+  final Color? backgroundColor;
+  final Color? contentColor;
+  final PanelShape? panelShape;
+  final PanelState? panelState;
+  final double? panelOpenOffset;
+  final int? panelAnimDuration;
+  final Curve? panelAnimCurve;
+  final DockType? dockType;
+  final double? dockOffset;
+  final int? dockAnimDuration;
+  final Curve? dockAnimCurve;
   final List<IconData> buttons;
-  final Function(int) onPressed;
+  final Function(int)? onPressed;
 
   FloatBoxPanel(
-      {this.buttons,
+      {required this.buttons,
       this.positionTop,
       this.positionLeft,
       this.borderColor,
@@ -169,8 +169,8 @@ class _FloatBoxState extends State<FloatBoxPanel> {
     }
 
     // Panel border is only enabled if the border width is greater than 0;
-    Border _panelBorder() {
-      if (widget.borderWidth != null && widget.borderWidth > 0) {
+    Border? _panelBorder() {
+      if (widget.borderWidth != null && widget.borderWidth! > 0) {
         return Border.all(
           color: widget.borderColor ?? Color(0xFF333333),
           width: widget.borderWidth ?? 0.0,
@@ -317,7 +317,9 @@ class _FloatBoxState extends State<FloatBoxPanel> {
                   children: List.generate(_buttons.length, (index) {
                     return GestureDetector(
                       onTap: () {
-                        widget.onPressed(index);
+                        if (widget.onPressed != null) {
+                          return widget.onPressed!(index);
+                        }
                       },
                       child: _FloatButton(
                         size: widget.size ?? 70.0,
@@ -343,7 +345,11 @@ class _FloatButton extends StatelessWidget {
   final IconData icon;
   final double iconSize;
 
-  _FloatButton({this.size, this.color, this.icon, this.iconSize});
+  _FloatButton(
+      {required this.size,
+      required this.color,
+      required this.icon,
+      required this.iconSize});
 
   @override
   Widget build(BuildContext context) {
